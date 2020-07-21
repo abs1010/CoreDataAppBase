@@ -9,19 +9,6 @@
 import UIKit
 import CoreData
 
-//struct Empresa {
-//    var name: String
-//    var image: String
-//    var description: String
-//    var employees: [Funcionarios]
-//}
-//
-//struct Funcionarios {
-//    var name: String
-//    var birthDate: String
-//    var position: Position
-//}
-
 enum Position : String {
     case executive = "Executive"
     case seniorManagement = "Senior Management"
@@ -29,14 +16,19 @@ enum Position : String {
 }
 
 enum CoreDataReference : String {
-    
     case containerName = "CompanyDataModel"
-    case campany = "Empresa"
+    case company = "Empresa"
     case employess = "Funcionarios"
-
 }
 
-class CoreDataManager {
+enum Constants {
+    enum errorTypes {
+        case connectionError
+        case dataCouldNotBeSaved
+    }
+}
+
+class CompanyCDManager {
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: CoreDataReference.containerName.rawValue)
@@ -73,11 +65,23 @@ class CoreDataManager {
     func loadDataFromCoreData(completion: @escaping([Empresa]) -> Void) {
         
         let context = persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataReference.company.rawValue)
         let result = try? context.fetch(request)
         let arrayEmpresas = result as? [Empresa] ?? []
         completion(arrayEmpresas)
         
+    }
+    
+    func deleteInformation(id: NSManagedObjectID, completion: (Bool) -> Void) {
+        let context = persistentContainer.viewContext
+        let obj = context.object(with: id)
+        context.delete(obj)
+        do {
+            try context.save()
+            completion(true)
+        } catch {
+            completion(false)
+        }
     }
 
 }

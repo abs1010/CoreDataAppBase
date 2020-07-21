@@ -16,13 +16,13 @@ protocol CompaniesViewToPresenterProtocol: class {
     func numberOfRowsInSection(section: Int) -> Int
     func loadCompanieWithIndexPath(indexPath: IndexPath) -> Empresa
     func removeAllCompanyData()
-    func addCompany( _ company: Empresa)
+    func addCompany(name: String, image: String, description: String)
     func loadInformation()
+    func deleteInformation(indexPath: IndexPath)
 }
 
 protocol CompaniesPresenterToInteractorProtocol: class {
     var presenter: CompaniesInteractorToPresenterProtocol? { get set }
-    //func getMovies(page: Int, category: Constants.category, movieSelection: Constants.MovieSelection)
 }
 
 protocol CompaniesInteractorToPresenterProtocol: class {
@@ -33,7 +33,7 @@ protocol CompaniesInteractorToPresenterProtocol: class {
 protocol CompaniesPresenterToViewProtocol: class {
     var presenter: CompaniesViewToPresenterProtocol? { get set }
     func showResults()
-    //func problemOnFetchingData(error: Constants.errorTypes)
+    func showProblem(error: Constants.errorTypes)
     func confirmationOfDeletion()
 }
 

@@ -4,7 +4,6 @@
         <attribute name="descrip" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="funcionarios" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Funcionarios"/>
     </entity>
     <entity name="Funcionarios" representedClassName="Funcionarios" syncable="YES" codeGenerationType="class">
         <attribute name="birthDate" optional="YES" attributeType="String"/>
@@ -12,7 +11,7 @@
         <attribute name="position" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Empresa" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Empresa" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="Funcionarios" positionX="-54" positionY="18" width="128" height="88"/>
     </elements>
 </model>

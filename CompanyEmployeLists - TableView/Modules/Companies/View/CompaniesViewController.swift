@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CompaniesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -23,6 +24,8 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         setUpNavBar()
         setUp()
         setUpConstraints()
+        
+        presenter?.loadInformation()
         
     }
     
@@ -71,34 +74,35 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @objc private func addCompany() {
         
-        let alerta = UIAlertController(title: "Adicionar empresa", message: "Digite o nome da empresa.", preferredStyle: .alert)
-    
-        alerta.addTextField { (textField) in
+        let alerta = UIAlertController(title: "Adicionar empresa", message: "Digite as informações da empresa.", preferredStyle: .alert)
+        
+        alerta.addTextField { (nameTextField) in
             
-            textField.placeholder = "Enter Company Name"
-                  
+            nameTextField.placeholder = "Enter Company Name"
+            
+        }
+        
+        alerta.addTextField { (imageTextField) in
+            
+            imageTextField.placeholder = "Company image Name"
+            
+        }
+        
+        alerta.addTextField { (descriptionTextField) in
+            
+            descriptionTextField.placeholder = "Description"
+            
         }
         
         let btnOk = UIAlertAction(title: "Ok", style: .default) { ( _) in
             
-            let firstTextField = alerta.textFields![0] as UITextField
+            guard let nameTextField = alerta.textFields![0].text else { return }
+            guard let imageTextField = alerta.textFields![1].text else { return }
+            guard let descriptionTextField = alerta.textFields![2].text else { return }
             
-            let company = Empresa()
-            company.name = firstTextField.text ?? ""
-            company.image = "add"
-            company.descrip = "Nova empresa adicionada"
-            
-            let funcionario = Funcionarios()
-            funcionario.name = "Alan"
-            funcionario.birthDate = "20/02/1990"
-            funcionario.position = ""
-            
-            company.funcionarios = funcionario
-            
-            self.presenter?.addCompany(company)
-            
-            self.companiesTableView.reloadData()
-        }
+            self.presenter?.addCompany(name: nameTextField, image: imageTextField, description: descriptionTextField
+                
+            )}
         
         alerta.addAction(btnOk)
         
@@ -123,12 +127,6 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         return presenter?.numberOfSections() ?? 0
     }
-    
-    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //
-    //        return "🏢 Names"
-    //
-    //    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -174,7 +172,7 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return presenter?.numberOfRowsInSection(section: section) ?? 0
-    
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -185,9 +183,11 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
             return UITableViewCell()
         }
         
-        //cell.companyImageView.image = UIImage(named: company.image)
+        if let image = company.image {
+            cell.companyImageView.image = UIImage(named: image)
+        }
         
-        //cell.companyName.text = company.description == "" ? company.name : company.name + " - " + company.description
+        cell.companyName.text = company.description == "" ? company.name : company.name ?? "" + " - " + company.description
         
         return cell
         
@@ -207,13 +207,19 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        presenter?.deleteInformation(indexPath: indexPath)
+        
+    }
+    
 }
 
 extension CompaniesViewController : CompaniesPresenterToViewProtocol {
     
     func confirmationOfDeletion() {
         
-        let alerta = UIAlertController(title: "Aviso", message: "Todos os dados foram removidos!", preferredStyle: .alert)
+        let alerta = UIAlertController(title: "Aviso", message: "Os dados foram removidos!", preferredStyle: .alert)
         
         let btnOk = UIAlertAction(title: "Ok", style: .default) { ( _) in
             self.companiesTableView.reloadData()
@@ -226,6 +232,16 @@ extension CompaniesViewController : CompaniesPresenterToViewProtocol {
     }
     
     func showResults() {
+        
+        DispatchQueue.main.async {
+            self.companiesTableView.reloadData()
+        }
+        
+    }
+    
+    func showProblem(error: Constants.errorTypes) {
+        
+        print("Problema ao remover os dados")
         
     }
     
