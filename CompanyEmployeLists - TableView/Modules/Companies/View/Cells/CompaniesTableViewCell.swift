@@ -28,6 +28,15 @@ class CompaniesTableViewCell: UITableViewCell {
         return label
     }()
     
+    let companyDescription: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
@@ -42,7 +51,7 @@ class CompaniesTableViewCell: UITableViewCell {
     
         addSubview(companyImageView)
         addSubview(companyName)
-        
+        addSubview(companyDescription)
     }
     
     private func setUpConstrainsts() {
@@ -55,7 +64,11 @@ class CompaniesTableViewCell: UITableViewCell {
             companyImageView.heightAnchor.constraint(equalToConstant: 30),
             
             companyName.leadingAnchor.constraint(equalTo: companyImageView.trailingAnchor, constant: 5.0),
-            companyName.centerYAnchor.constraint(equalTo: centerYAnchor)
+            companyName.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            companyDescription.leadingAnchor.constraint(equalTo: companyName.trailingAnchor, constant: 10.0),
+            //companyDescription.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10.0), Set Priorities
+            companyDescription.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
     }

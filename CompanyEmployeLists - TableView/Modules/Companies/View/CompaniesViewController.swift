@@ -25,7 +25,7 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         setUp()
         setUpConstraints()
         
-        presenter?.loadInformation()
+        presenter?.refreshCoreData()
         
     }
     
@@ -187,7 +187,9 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.companyImageView.image = UIImage(named: image)
         }
         
-        cell.companyName.text = company.description == "" ? company.name : company.name ?? "" + " - " + company.description
+        cell.companyName.text = company.name
+        
+        cell.companyDescription.text = company.descrip
         
         return cell
         

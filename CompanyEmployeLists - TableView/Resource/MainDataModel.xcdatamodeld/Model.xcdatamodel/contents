@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Company" representedClassName=".Company" syncable="YES">
+        <attribute name="descrip" attributeType="String"/>
+        <attribute name="image" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="staffArray" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Staff" inverseName="company" inverseEntity="Staff"/>
+    </entity>
+    <entity name="Staff" representedClassName=".Staff" syncable="YES">
+        <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="position" optional="YES" attributeType="String"/>
+        <relationship name="company" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="staffArray" inverseEntity="Company"/>
+    </entity>
+    <elements>
+        <element name="Company" positionX="-249.265625" positionY="-279.22265625" width="128" height="103"/>
+        <element name="Staff" positionX="-63" positionY="9" width="128" height="28"/>
+    </elements>
+</model>

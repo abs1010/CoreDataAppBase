@@ -14,9 +14,9 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
     var interactor: CompaniesPresenterToInteractorProtocol?
     var router: CompaniesPresenterToRouterProtocol?
     
-    lazy var coreDataManager = CompanyCDManager()
+    //lazy var coreDataManager = CoreDataManager()
     
-    var companyArray: [Empresa] = []
+    var companyArray: [Company] = []
     
     func numberOfSections() -> Int {
         
@@ -30,7 +30,7 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
         
     }
     
-    func loadCompanieWithIndexPath(indexPath: IndexPath) -> Empresa {
+    func loadCompanieWithIndexPath(indexPath: IndexPath) -> Company {
         
         return companyArray[indexPath.row]
         
@@ -45,16 +45,16 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
     
     func addCompany(name: String, image: String, description: String) {
 
-        coreDataManager.addCompany(name: name, image: image, description: description)
+        CoreDataManager.shared.addCompany(name: name, image: image, description: description)
         
-        loadInformation()
+        refreshCoreData()
         view?.showResults()
         
     }
     
-    func loadInformation() {
+    func refreshCoreData() {
 
-        coreDataManager.loadDataFromCoreData { (loadedData) in
+         CoreDataManager.shared.loadDataFromCoreData { (loadedData) in
             
             self.companyArray = loadedData
             
@@ -68,11 +68,12 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
         
         let index =  companyArray[indexPath.row].objectID
         
-        coreDataManager.deleteInformation(id: index) { (success) in
+        
+        CoreDataManager.shared.deleteInformation(id: index) { (success) in
             
             if success {
                 view?.confirmationOfDeletion()
-                loadInformation()
+                refreshCoreData()
             }else {
                 view?.showProblem(error: .dataCouldNotBeSaved)
             }

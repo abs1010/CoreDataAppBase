@@ -14,10 +14,10 @@ protocol CompaniesViewToPresenterProtocol: class {
     var router: CompaniesPresenterToRouterProtocol? { get set }
     func numberOfSections() -> Int
     func numberOfRowsInSection(section: Int) -> Int
-    func loadCompanieWithIndexPath(indexPath: IndexPath) -> Empresa
+    func loadCompanieWithIndexPath(indexPath: IndexPath) -> Company
     func removeAllCompanyData()
     func addCompany(name: String, image: String, description: String)
-    func loadInformation()
+    func refreshCoreData()
     func deleteInformation(indexPath: IndexPath)
 }
 

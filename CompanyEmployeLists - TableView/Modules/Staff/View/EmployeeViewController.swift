@@ -12,7 +12,7 @@ class EmployeeViewController: UITableViewController {
     
     private var cellID = "cellID"
     
-    var selectedCompany: Empresa? {
+    var selectedCompany: Company? {
         
         didSet {
             
@@ -121,7 +121,7 @@ class EmployeeViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
-        var employee: Funcionarios?
+        //var employee: Funcionario?
         
 //        switch indexPath.section {
 //        case 0:
@@ -134,7 +134,7 @@ class EmployeeViewController: UITableViewController {
 //            break
 //        }
         
-        cell.textLabel?.text = employee?.name
+        //cell.textLabel?.text = employee?.name
         
         return cell
     }
