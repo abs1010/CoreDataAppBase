@@ -25,6 +25,8 @@
 		BCD638B824CF7AC500EE6FC0 /* Company+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD638B424CF7AC500EE6FC0 /* Company+CoreDataProperties.swift */; };
 		BCD638B924CF7AC500EE6FC0 /* Staff+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD638B524CF7AC500EE6FC0 /* Staff+CoreDataClass.swift */; };
 		BCD638BA24CF7AC500EE6FC0 /* Staff+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD638B624CF7AC500EE6FC0 /* Staff+CoreDataProperties.swift */; };
+		BCD638BF24CFA65100EE6FC0 /* StaffPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD638BE24CFA65100EE6FC0 /* StaffPresenter.swift */; };
+		BCD638C224CFB00900EE6FC0 /* CreateEmployeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD638C124CFB00900EE6FC0 /* CreateEmployeeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		BCD638B424CF7AC500EE6FC0 /* Company+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Company+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BCD638B524CF7AC500EE6FC0 /* Staff+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Staff+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BCD638B624CF7AC500EE6FC0 /* Staff+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Staff+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BCD638BE24CFA65100EE6FC0 /* StaffPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffPresenter.swift; sourceTree = "<group>"; };
+		BCD638C124CFB00900EE6FC0 /* CreateEmployeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				BC56272224C28BF300FD709C /* EmployeeViewController.swift */,
+				BCD638C024CFAFBF00EE6FC0 /* CreateEmployee */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 		BC56272124C28BB900FD709C /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				BCD638BE24CFA65100EE6FC0 /* StaffPresenter.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -245,6 +251,14 @@
 			children = (
 			);
 			path = Wireframe;
+			sourceTree = "<group>";
+		};
+		BCD638C024CFAFBF00EE6FC0 /* CreateEmployee */ = {
+			isa = PBXGroup;
+			children = (
+				BCD638C124CFB00900EE6FC0 /* CreateEmployeeViewController.swift */,
+			);
+			path = CreateEmployee;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCD638BF24CFA65100EE6FC0 /* StaffPresenter.swift in Sources */,
 				BC943F2F24BFD5A400573147 /* CompaniesViewController.swift in Sources */,
 				BC56271424C1F41900FD709C /* CompaniesRouter.swift in Sources */,
 				BC56270E24C1F12100FD709C /* CompaniesPresenter.swift in Sources */,
@@ -324,6 +339,7 @@
 				BCD638B724CF7AC500EE6FC0 /* Company+CoreDataClass.swift in Sources */,
 				BC56271224C1F24E00FD709C /* CompaniesEntity.swift in Sources */,
 				BCD638B824CF7AC500EE6FC0 /* Company+CoreDataProperties.swift in Sources */,
+				BCD638C224CFB00900EE6FC0 /* CreateEmployeeViewController.swift in Sources */,
 				BC56271024C1F24000FD709C /* CompaniesInteractor.swift in Sources */,
 				BCD638BA24CF7AC500EE6FC0 /* Staff+CoreDataProperties.swift in Sources */,
 				BC943F2B24BFD5A400573147 /* AppDelegate.swift in Sources */,

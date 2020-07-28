@@ -68,8 +68,7 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
         
         let index =  companyArray[indexPath.row].objectID
         
-        
-        CoreDataManager.shared.deleteInformation(id: index) { (success) in
+        CoreDataManager.shared.deleteACompany(id: index) { (success) in
             
             if success {
                 view?.confirmationOfDeletion()

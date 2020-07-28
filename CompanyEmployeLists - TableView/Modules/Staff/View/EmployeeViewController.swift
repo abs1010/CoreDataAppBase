@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmployeeViewController: UITableViewController {
+class StaffViewController: UITableViewController {
     
     private var cellID = "cellID"
     
@@ -31,6 +31,7 @@ class EmployeeViewController: UITableViewController {
         navigationItem.title = "Employees"
         
         setUp()
+        setUpNavBar()
         
     }
     
@@ -41,6 +42,24 @@ class EmployeeViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         
     }
+    
+    private func setUpNavBar() {
+        
+        navigationItem.title = selectedCompany?.name
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addStaff))
+        
+    }
+    
+    @objc private func addStaff() {
+        
+        let vc = CreateEmployeeViewController()
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         //Todo

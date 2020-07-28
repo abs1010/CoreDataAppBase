@@ -13,7 +13,7 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     fileprivate let cellId = "cellID"
     
-    let companiesTableView = UITableView(frame: .zero)
+    private let companiesTableView = UITableView(frame: .zero)
     
     weak var presenter: CompaniesViewToPresenterProtocol?
     
@@ -31,6 +31,16 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let destination = segue.destination as? StaffViewController, let indexPath = companiesTableView.indexPathForSelectedRow {
+            
+            destination.selectedCompany = presenter?.loadCompanieWithIndexPath(indexPath: indexPath)
+            
+        }
+        
     }
     
     private func setUp() {
@@ -199,7 +209,7 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let eViewController = EmployeeViewController()
+        let eViewController = StaffViewController()
         
         let company = presenter?.loadCompanieWithIndexPath(indexPath: indexPath)
         
