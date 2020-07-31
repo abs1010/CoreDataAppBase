@@ -45,7 +45,7 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func setUp() {
         
-        view.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9796836972, green: 0.2490850687, blue: 0.3219926953, alpha: 1)
         
         companiesTableView.delegate = self
         companiesTableView.dataSource = self
@@ -62,8 +62,8 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         navigationItem.title = "Companies"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
-        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9796836972, green: 0.2490850687, blue: 0.3219926953, alpha: 1)
+        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9796836972, green: 0.2490850687, blue: 0.3219926953, alpha: 1)
         
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]

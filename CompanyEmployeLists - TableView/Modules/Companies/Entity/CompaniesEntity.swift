@@ -8,9 +8,9 @@
 
 import UIKit
 
-enum Position : String {
+enum Position : String, CaseIterable {
     case executive = "Executive"
-    case seniorManagement = "Senior Management"
+    case seniorManager = "Senior Manager"
     case staff = "Staff"
 }
 

@@ -37,7 +37,7 @@ class StaffViewController: UITableViewController {
     
     private func setUp() {
         
-        view.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9796836972, green: 0.2490850687, blue: 0.3219926953, alpha: 1)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         
@@ -87,7 +87,7 @@ class StaffViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return .init(30.0)
+        return .init(45.0)
         
     }
     
@@ -131,7 +131,7 @@ class StaffViewController: UITableViewController {
 //            return 0
 //        }
         
-        return 1
+        return 0
         //return selectedCompany?.employees.count ?? 0
         
     }
