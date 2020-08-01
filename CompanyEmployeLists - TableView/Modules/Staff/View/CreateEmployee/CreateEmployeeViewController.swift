@@ -10,7 +10,7 @@ import UIKit
 
 class CreateEmployeeViewController: UIViewController {
     
-    let mainView: UIView = {
+    private let headerView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = #colorLiteral(red: 0.855904758, green: 0.9211789966, blue: 0.9547855258, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -18,7 +18,7 @@ class CreateEmployeeViewController: UIViewController {
         return view
     }()
 
-    let bottomView: UIView = {
+    private let bottomView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = #colorLiteral(red: 0.03102667071, green: 0.1788176596, blue: 0.2500987947, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -26,7 +26,7 @@ class CreateEmployeeViewController: UIViewController {
         return view
     }()
     
-    let positionSegmentedControl: UISegmentedControl = {
+    private let positionSegmentedControl: UISegmentedControl = {
         
         var items = [String]()
         
@@ -50,7 +50,7 @@ class CreateEmployeeViewController: UIViewController {
         return segmentedControl
     }()
     
-    let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.text = "Name"
@@ -61,7 +61,19 @@ class CreateEmployeeViewController: UIViewController {
         return label
     }()
     
-    let dobLabel: UILabel = {
+    private let nameTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.placeholder = "Type the name"
+        textField.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        textField.layer.cornerRadius = 2
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clipsToBounds = false
+        
+        return textField
+    }()
+    
+    private let dobLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.text = "Birthday"
@@ -71,7 +83,21 @@ class CreateEmployeeViewController: UIViewController {
         
         return label
     }()
-
+    
+    let datePicker = UIDatePicker()
+    
+    private let dobTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.placeholder = "DD/MM/AAAA"
+        textField.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        textField.layer.cornerRadius = 2
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clipsToBounds = false
+        
+        return textField
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,12 +107,39 @@ class CreateEmployeeViewController: UIViewController {
         setUp()
         setUpNavBar()
         addSubViewsAndSetConstraints()
+        createdatepicker()
         
+    }
+    
+    private func createdatepicker() {
+        
+        datePicker.datePickerMode = .date
+        
+        let tollbar = UIToolbar()
+        tollbar.sizeToFit()
+        
+        let donebutton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        tollbar.setItems([donebutton], animated: true)
+        dobTextField.inputAccessoryView = tollbar
+        
+        dobTextField.inputView = datePicker
+        
+    }
+    
+    @objc private func done() {
+        
+        let formatDate = DateFormatter()
+        formatDate.dateFormat = "dd/MM/yyyy"
+        
+        dobTextField.text = formatDate.string(from: datePicker.date)
+        self.view.endEditing(true)
     }
     
     private func setUp() {
         
         view.backgroundColor = #colorLiteral(red: 0.9796836972, green: 0.2490850687, blue: 0.3219926953, alpha: 1)
+        nameTextField.delegate = self
+        dobTextField.delegate = self
         
     }
     
@@ -111,31 +164,45 @@ class CreateEmployeeViewController: UIViewController {
     
     private func addSubViewsAndSetConstraints() {
      
-        mainView.addSubview(nameLabel)
-        //mainView.addSubview(dobLabel)
-        mainView.addSubview(positionSegmentedControl)
-        view.addSubview(mainView)
+        headerView.addSubview(nameLabel)
+        headerView.addSubview(nameTextField)
+        headerView.addSubview(dobLabel)
+        headerView.addSubview(dobTextField)
+        headerView.addSubview(positionSegmentedControl)
+        view.addSubview(headerView)
         view.addSubview(bottomView)
         
         NSLayoutConstraint.activate([
             
             positionSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0),
             positionSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10.0),
-            positionSegmentedControl.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -10.0),
-            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
-            mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
-            mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
-            mainView.heightAnchor.constraint(equalToConstant: 200.0),
+            positionSegmentedControl.topAnchor.constraint(equalTo: dobTextField.bottomAnchor, constant: 10.0),
+            
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0),
+            headerView.bottomAnchor.constraint(equalTo: positionSegmentedControl.bottomAnchor, constant: 10.0),
+            
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
-            bottomView.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 0.0),
+            bottomView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0.0),
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10.0),
+            nameLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 15.0),
+            nameLabel.widthAnchor.constraint(equalToConstant: 80.0),
+            
+            nameTextField.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10.0),
+            nameTextField.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10.0),
+            nameTextField.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10.0),
 
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0),
-            nameLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 10.0),
-            nameLabel.widthAnchor.constraint(equalToConstant: 60.0)
+            dobLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0),
+            dobLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20.0),
+            dobLabel.widthAnchor.constraint(equalToConstant: 80.0),
 
-//            dboLabel
+            dobTextField.leadingAnchor.constraint(equalTo: dobLabel.trailingAnchor, constant: 10.0),
+            dobTextField.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10.0),
+            dobTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 10.0)
             
         ])
         
@@ -154,3 +221,34 @@ class CreateEmployeeViewController: UIViewController {
     }
     
 }
+
+extension CreateEmployeeViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField == dobTextField {
+            textField.text?.removeAll()
+        }
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == nameTextField {
+            dobTextField.becomeFirstResponder()
+        }
+        
+        return true
+    }
+    
+}
+
+/*
+ /First StackView
+ let stackView1 = UIStackView(arrangedSubviews: [nameLabel, nameTextField])
+ stackView1.translatesAutoresizingMaskIntoConstraints = false
+ stackView1.axis = .horizontal
+ stackView1.setCustomSpacing(10.0, after: mainView)
+ 
+ mainView.addSubview(stackView1)
+*/

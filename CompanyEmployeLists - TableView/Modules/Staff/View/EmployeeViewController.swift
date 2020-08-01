@@ -46,7 +46,7 @@ class StaffViewController: UITableViewController {
     private func setUpNavBar() {
         
         navigationItem.title = selectedCompany?.name
-        
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addStaff))
         
     }
