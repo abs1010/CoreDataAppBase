@@ -55,6 +55,8 @@ class StaffViewController: UITableViewController {
         
         let vc = CreateEmployeeViewController()
         
+        vc.delegate = self
+        
         navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -131,8 +133,7 @@ class StaffViewController: UITableViewController {
 //            return 0
 //        }
         
-        return 0
-        //return selectedCompany?.employees.count ?? 0
+        return selectedCompany?.staff?.count ?? 0
         
     }
     
@@ -140,7 +141,9 @@ class StaffViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
-        //var employee: Funcionario?
+        //var employee: Staff?
+        
+        let employee = selectedCompany?.staff?[indexPath.row]
         
 //        switch indexPath.section {
 //        case 0:
@@ -153,15 +156,40 @@ class StaffViewController: UITableViewController {
 //            break
 //        }
         
-        //cell.textLabel?.text = employee?.name
+        cell.textLabel?.text = employee?.name
+        
+        let formatDate = DateFormatter()
+        formatDate.dateFormat = "dd/MM/yyyy"
+        
+        cell.detailTextLabel?.text = formatDate.string(from: employee?.dateOfBirth ?? Date())
         
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        //CoreDataManager.shared.
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
+}
+
+extension StaffViewController: CreateEmployeeViewControllerDelegate {
+    
+    func saveStaff(staff: Staff) {
+        
+        self.selectedCompany?.addToStaffArray(staff)
+        CoreDataManager.shared.saveContext()
+        
+        navigationController?.popViewController(animated: true)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
         
     }
     

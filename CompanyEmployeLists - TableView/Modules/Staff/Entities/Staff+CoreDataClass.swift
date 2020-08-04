@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 public class Staff: NSManagedObject {
     
     convenience init(name: String, dob: Date, position: Position) {
@@ -25,6 +24,5 @@ public class Staff: NSManagedObject {
         self.position = position.rawValue
         
     }
-    
 
 }

@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol CreateEmployeeViewControllerDelegate : class {
+    
+    func saveStaff(staff: Staff)
+    
+}
+
 class CreateEmployeeViewController: UIViewController {
+    
+    weak var delegate: CreateEmployeeViewControllerDelegate?
     
     private let headerView: UIView = {
         let view = UIView(frame: .zero)
@@ -84,6 +92,7 @@ class CreateEmployeeViewController: UIViewController {
         return label
     }()
     
+    //Date Picker
     let datePicker = UIDatePicker()
     
     private let dobTextField: UITextField = {
@@ -215,9 +224,20 @@ class CreateEmployeeViewController: UIViewController {
     }
     
     @objc private func saveNewEmployee() {
+    
+        let formatDate = DateFormatter()
+        formatDate.dateFormat = "dd/MM/yyyy"
         
-        navigationController?.popViewController(animated: true)
+        if let name = nameTextField.text, let dob = formatDate.date(from: dobTextField.text ?? "") {
+            
+            let position = Position.allCases[positionSegmentedControl.selectedSegmentIndex].rawValue
+            
+            let newStaff = Staff(name: name, dob: dob, position: Position(rawValue: position)!)
         
+            delegate?.saveStaff(staff: newStaff)
+        
+        }
+            
     }
     
 }
