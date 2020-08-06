@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC2BDA4F24DA42CF00F10879 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BDA4E24DA42CF00F10879 /* AlertService.swift */; };
+		BC2BDA5124DB80EF00F10879 /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2BDA5024DB80EF00F10879 /* AlertView.xib */; };
 		BC56270E24C1F12100FD709C /* CompaniesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC56270D24C1F12100FD709C /* CompaniesPresenter.swift */; };
 		BC56271024C1F24000FD709C /* CompaniesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC56270F24C1F24000FD709C /* CompaniesInteractor.swift */; };
 		BC56271224C1F24E00FD709C /* CompaniesEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC56271124C1F24E00FD709C /* CompaniesEntity.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC2BDA4E24DA42CF00F10879 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		BC2BDA5024DB80EF00F10879 /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		BC56270D24C1F12100FD709C /* CompaniesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesPresenter.swift; sourceTree = "<group>"; };
 		BC56270F24C1F24000FD709C /* CompaniesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesInteractor.swift; sourceTree = "<group>"; };
 		BC56271124C1F24E00FD709C /* CompaniesEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesEntity.swift; sourceTree = "<group>"; };
@@ -73,6 +77,23 @@
 				BC943F3324BFD5A600573147 /* Assets.xcassets */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		BC2BDA4C24DA42B200F10879 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				BC2BDA4D24DA42C100F10879 /* Alert */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		BC2BDA4D24DA42C100F10879 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				BC2BDA4E24DA42CF00F10879 /* AlertService.swift */,
+				BC2BDA5024DB80EF00F10879 /* AlertView.xib */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		BC56270524C116B600FD709C /* AppDelegate */ = {
@@ -223,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				BC56270524C116B600FD709C /* AppDelegate */,
+				BC2BDA4C24DA42B200F10879 /* Service */,
 				BC56270624C118D200FD709C /* Modules */,
 				BC2319D124C6735600222280 /* Resource */,
 				BC943F3824BFD5A600573147 /* Info.plist */,
@@ -319,6 +341,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC2BDA5124DB80EF00F10879 /* AlertView.xib in Resources */,
 				BC943F3724BFD5A600573147 /* LaunchScreen.storyboard in Resources */,
 				BC943F3424BFD5A600573147 /* Assets.xcassets in Resources */,
 			);
@@ -343,6 +366,7 @@
 				BC56271024C1F24000FD709C /* CompaniesInteractor.swift in Sources */,
 				BCD638BA24CF7AC500EE6FC0 /* Staff+CoreDataProperties.swift in Sources */,
 				BC943F2B24BFD5A400573147 /* AppDelegate.swift in Sources */,
+				BC2BDA4F24DA42CF00F10879 /* AlertService.swift in Sources */,
 				BCD638AA24CF210F00EE6FC0 /* CoreDataManager.swift in Sources */,
 				BC56272324C28BF300FD709C /* EmployeeViewController.swift in Sources */,
 				BC56271D24C278F700FD709C /* MainDataModel.xcdatamodeld in Sources */,

@@ -225,19 +225,83 @@ class CreateEmployeeViewController: UIViewController {
     
     @objc private func saveNewEmployee() {
     
-        let formatDate = DateFormatter()
-        formatDate.dateFormat = "dd/MM/yyyy"
-        
-        if let name = nameTextField.text, let dob = formatDate.date(from: dobTextField.text ?? "") {
+        do {
             
-            let position = Position.allCases[positionSegmentedControl.selectedSegmentIndex].rawValue
+            try validadeFields()
             
-            let newStaff = Staff(name: name, dob: dob, position: Position(rawValue: position)!)
-        
-            delegate?.saveStaff(staff: newStaff)
+            let formatDate = DateFormatter()
+            formatDate.dateFormat = "dd/MM/yyyy"
+            
+            if let name = nameTextField.text, let dob = formatDate.date(from: dobTextField.text ?? "") {
+                
+                let position = Position.allCases[positionSegmentedControl.selectedSegmentIndex].rawValue
+                
+                let newStaff = Staff(name: name, dob: dob, position: Position(rawValue: position)!)
+                
+                delegate?.saveStaff(staff: newStaff)
+                
+            }
+            
+        }
+        catch validationError.emptyName {
+            
+            let alert = AlertService()
+            
+            self.present(alert, animated: true)
+            print(validationError.emptyName.errorDescription!)
+            
+        }
+        catch validationError.emptyDOB {
+            
+            print(validationError.emptyDOB.errorDescription!)
         
         }
+        catch validationError.invalidName {
             
+            print(validationError.invalidName.errorDescription!)
+            
+        }
+        catch {
+            print("Unexpected error: \(error).")
+        }
+        
+    }
+    
+    fileprivate enum validationError: Error {
+        
+        case emptyName
+        case emptyDOB
+        case invalidName
+        
+        var errorDescription: String? {
+            
+            switch self {
+            case .emptyName:
+                return "The name field is empty."
+            case .emptyDOB:
+                return "The Date Of Birth field is empty."
+            case .invalidName:
+                return "You have entered an invalid value"
+            }
+            
+        }
+        
+    }
+    
+    private func validadeFields() throws {
+        
+        guard nameTextField.text != "" else {
+            throw validationError.emptyName
+        }
+        
+        guard dobTextField.text != "" else {
+            throw validationError.emptyDOB
+        }
+        
+        guard nameTextField.text!.count > 2 else {
+            throw validationError.invalidName
+        }
+        
     }
     
 }

@@ -61,113 +61,115 @@ class StaffViewController: UITableViewController {
         
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        //Todo
-//        if selectedCompany?.employees.filter({$0.position == .executive}).count ?? 0 > 0 {
-//
-//            return Position.executive.rawValue
-//
-//        }
-//
-//        else if selectedCompany?.employees.filter({$0.position == .seniorManagement}).count ?? 0 > 0 {
-//
-//            return Position.seniorManagement.rawValue
-//
-//        }
-//        else if selectedCompany?.employees.filter({$0.position == .staff}).count ?? 0 > 0 {
-//
-//            return Position.staff.rawValue
-//
-//        }else {
-//
+        
+        switch section {
+        case 0:
+            return Position.executive.rawValue
+        case 1:
+            return Position.seniorManager.rawValue
+        case 2:
+            return Position.staff.rawValue
+        default:
             return "Header"
-//        }
+        }
         
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return .init(45.0)
+        return .init(40.0)
         
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-//        guard let exec = selectedCompany?.employees.filter({$0.position == .executive}) else { return 0 }
-//        guard let senior = selectedCompany?.employees.filter({$0.position == .seniorManagement}) else { return 0 }
-//        guard let staff = selectedCompany?.employees.filter({$0.position == .staff}) else { return 0 }
-        
-//        let array = [exec, senior, staff]
-//
-//        var qtdeSections = 0
-//
-//        array.forEach { (position) in
-//            if position.count > 0 {
-//                qtdeSections += 1
-//            }
-//        }
-//
-//        return qtdeSections
-        return 1
+        return Position.allCases.count
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        switch section {
-//        case 0:
-//            return selectedCompany?.employees.filter({ (employee) -> Bool in
-//                employee.position == .executive
-//            }).count ?? 0
-//        case 1:
-//            return selectedCompany?.employees.filter({ (employee) -> Bool in
-//                employee.position == .seniorManagement
-//            }).count ?? 0
-//        case 2:
-//            return selectedCompany?.employees.filter({ (employee) -> Bool in
-//                employee.position == .staff
-//            }).count ?? 0
-//        default:
-//            return 0
-//        }
+        guard let exec = selectedCompany?.staff?.filter({$0.position == Position.executive.rawValue}).count else { return 0 }
+        guard let senior = selectedCompany?.staff?.filter({$0.position == Position.seniorManager.rawValue}).count else { return 0 }
+        guard let staff = selectedCompany?.staff?.filter({$0.position == Position.staff.rawValue}).count else { return 0 }
         
-        return selectedCompany?.staff?.count ?? 0
+        switch section {
+        case 0:
+            return exec
+        case 1:
+            return senior
+        case 2:
+            return staff
+        default:
+            return 0
+        }
         
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
         
-        //var employee: Staff?
+        var employee: Staff?
+        //let employee = selectedCompany?.staff?[indexPath.row]
         
-        let employee = selectedCompany?.staff?[indexPath.row]
-        
-//        switch indexPath.section {
-//        case 0:
-//            employee = selectedCompany?.employees.filter({$0.position == .executive})[indexPath.row]
-//        case 1:
-//            employee = selectedCompany?.employees.filter({$0.position == .seniorManagement})[indexPath.row]
-//        case 2:
-//            employee = selectedCompany?.employees.filter({$0.position == .staff})[indexPath.row]
-//        default:
-//            break
-//        }
-        
-        cell.textLabel?.text = employee?.name
+        switch indexPath.section {
+        case 0:
+            if let executives = selectedCompany?.staff?.filter({$0.position == Position.executive.rawValue}) {
+                employee = executives[indexPath.row]
+            }
+        case 1:
+            if let executives = selectedCompany?.staff?.filter({$0.position == Position.seniorManager.rawValue}) {
+                employee = executives[indexPath.row]
+            }
+        case 2:
+            if let executives = selectedCompany?.staff?.filter({$0.position == Position.staff.rawValue}) {
+                employee = executives[indexPath.row]
+            }
+        default:
+            return cell
+        }
         
         let formatDate = DateFormatter()
         formatDate.dateFormat = "dd/MM/yyyy"
-        
         cell.detailTextLabel?.text = formatDate.string(from: employee?.dateOfBirth ?? Date())
+        cell.textLabel?.text = employee?.name
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        //CoreDataManager.shared.
+        
+        //selectedCompany?.removeFromStaffArray(at: indexPath.row)
+        //CoreDataManager.shared.saveContext()
+        
+        var employee: Staff?
+        
+        switch indexPath.section {
+        case 0:
+            if let executives = selectedCompany?.staff?.filter({$0.position == Position.executive.rawValue}) {
+                employee = executives[indexPath.row]
+            }
+        case 1:
+            if let executives = selectedCompany?.staff?.filter({$0.position == Position.seniorManager.rawValue}) {
+                employee = executives[indexPath.row]
+            }
+        case 2:
+            if let executives = selectedCompany?.staff?.filter({$0.position == Position.staff.rawValue}) {
+                employee = executives[indexPath.row]
+            }
+        default:
+            return
+        }
+        
+        if let staff = employee {
+            selectedCompany?.removeFromStaffArray(staff)
+            CoreDataManager.shared.saveContext()
+        }
+        
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

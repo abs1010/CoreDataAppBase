@@ -14,8 +14,6 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
     var interactor: CompaniesPresenterToInteractorProtocol?
     var router: CompaniesPresenterToRouterProtocol?
     
-    //lazy var coreDataManager = CoreDataManager()
-    
     var companyArray: [Company] = []
     
     func numberOfSections() -> Int {
@@ -37,6 +35,10 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
     }
     
     func removeAllCompanyData() {
+        
+        let company = Company()
+         
+        print(company.staffArray?.array.count)
         
         companyArray.removeAll()
         view?.confirmationOfDeletion()

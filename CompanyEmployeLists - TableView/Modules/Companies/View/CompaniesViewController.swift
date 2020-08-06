@@ -189,6 +189,8 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CompaniesTableViewCell
         
+        cell.accessoryType = .disclosureIndicator
+        
         guard let company = presenter?.loadCompanieWithIndexPath(indexPath: indexPath) else {
             return UITableViewCell()
         }

@@ -77,23 +77,20 @@ class CoreDataManager {
         }
     }
     
-    /*
-    mutating func addEmployeeToACompany(employee: Funcionario, id: NSManagedObjectID) {
+    func deleteStaff(company: Company) {
         
-        let context = persistentContainer.viewContext
-        
-        let empresa = Empresa(context: context)
-
-        let funcionario = context.object(with: id) as? Funcionario
-        
-        //funcionario.add
-        
-        //person?.addToVehicles(car)
-        
-        try? context.save()
+//        let context = persistentContainer.viewContext
+//
+//        let empresa = Empresa(context: context)
+//
+//        let funcionario = context.object(with: id) as? Funcionario
+//
+//        //funcionario.add
+//
+//        //person?.addToVehicles(car)
+//
+//        try? context.save()
         
     }
- */
-
     
 }
