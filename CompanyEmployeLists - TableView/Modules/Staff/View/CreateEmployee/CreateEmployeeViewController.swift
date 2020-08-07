@@ -25,7 +25,7 @@ class CreateEmployeeViewController: UIViewController {
         
         return view
     }()
-
+    
     private let bottomView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = #colorLiteral(red: 0.03102667071, green: 0.1788176596, blue: 0.2500987947, alpha: 1)
@@ -172,7 +172,7 @@ class CreateEmployeeViewController: UIViewController {
     }
     
     private func addSubViewsAndSetConstraints() {
-     
+        
         headerView.addSubview(nameLabel)
         headerView.addSubview(nameTextField)
         headerView.addSubview(dobLabel)
@@ -204,11 +204,11 @@ class CreateEmployeeViewController: UIViewController {
             nameTextField.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10.0),
             nameTextField.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10.0),
             nameTextField.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10.0),
-
+            
             dobLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0),
             dobLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20.0),
             dobLabel.widthAnchor.constraint(equalToConstant: 80.0),
-
+            
             dobTextField.leadingAnchor.constraint(equalTo: dobLabel.trailingAnchor, constant: 10.0),
             dobTextField.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10.0),
             dobTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 10.0)
@@ -224,7 +224,7 @@ class CreateEmployeeViewController: UIViewController {
     }
     
     @objc private func saveNewEmployee() {
-    
+        
         do {
             
             try validadeFields()
@@ -244,25 +244,34 @@ class CreateEmployeeViewController: UIViewController {
             
         }
         catch validationError.emptyName {
-            
-            let alert = AlertService()
-            
-            self.present(alert, animated: true)
-            print(validationError.emptyName.errorDescription!)
+            if let message = validationError.emptyName.errorDescription {
+                
+                AlertService.shared.showAlert(image: #imageLiteral(resourceName: "Error"), title: "Erro", message: String.init(repeating: message, count: 4), completion: {
+                    
+                    print("Clicou em done")
+                    
+                })
+
+            }
             
         }
         catch validationError.emptyDOB {
             
-            print(validationError.emptyDOB.errorDescription!)
-        
+            //            if let message = validationError.emptyDOB.errorDescription {
+            //                AlertService.shared.showAlert(from: self, image: #imageLiteral(resourceName: "Error"), title: "Erro", message: message)
+            //            }
+            
         }
         catch validationError.invalidName {
             
-            print(validationError.invalidName.errorDescription!)
+            //            if let message = validationError.invalidName.errorDescription {
+            //                AlertService.shared.showAlert(from: self, image: #imageLiteral(resourceName: "Error"), title: "Erro", message: message)
+            //            }
+            
             
         }
         catch {
-            print("Unexpected error: \(error).")
+            //            AlertService.shared.showAlert(from: self, image: #imageLiteral(resourceName: "Error"), title: "Erro", message: "An unexpected error ocurred: \(error).")
         }
         
     }
@@ -335,4 +344,4 @@ extension CreateEmployeeViewController: UITextFieldDelegate {
  stackView1.setCustomSpacing(10.0, after: mainView)
  
  mainView.addSubview(stackView1)
-*/
+ */

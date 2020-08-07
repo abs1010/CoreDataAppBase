@@ -36,9 +36,9 @@ class CompaniesPresenter: CompaniesViewToPresenterProtocol, CompaniesInteractorT
     
     func removeAllCompanyData() {
         
-        let company = Company()
+        //let company = Company()
          
-        print(company.staffArray?.array.count)
+        //print(company.staffArray?.array.count)
         
         companyArray.removeAll()
         view?.confirmationOfDeletion()

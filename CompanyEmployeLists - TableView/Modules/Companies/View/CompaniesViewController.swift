@@ -233,15 +233,9 @@ extension CompaniesViewController : CompaniesPresenterToViewProtocol {
     
     func confirmationOfDeletion() {
         
-        let alerta = UIAlertController(title: "Aviso", message: "Os dados foram removidos!", preferredStyle: .alert)
-        
-        let btnOk = UIAlertAction(title: "Ok", style: .default) { ( _) in
-            self.companiesTableView.reloadData()
+        AlertService.shared.showAlert(image: #imageLiteral(resourceName: "exclamation-mark"), title: "Aviso", message: "Os dados da empresa foram removidos!") {
+            //self.companiesTableView.reloadData()
         }
-        
-        alerta.addAction(btnOk)
-        
-        present(alerta, animated: true)
         
     }
     
