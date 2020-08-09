@@ -11,6 +11,7 @@ import UIKit
 class StaffViewController: UITableViewController {
     
     private var cellID = "cellID"
+    private var arrowTouched = false
     
     var selectedCompany: Company? {
         
@@ -61,19 +62,64 @@ class StaffViewController: UITableViewController {
         
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    @objc private func didTapOnArrow(sender: UIButton) {
+        
+        arrowTouched = !arrowTouched
+        
+        let image = arrowTouched ? #imageLiteral(resourceName: "seta_cima_preto") : #imageLiteral(resourceName: "seta_baixo_preto")
+
+        print("Clicou em \(sender.tag)")
+        
+        let indexPaths: [IndexPath] = [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0)]
+        
+        tableView.deleteRows(at: indexPaths, with: .fade)
+    
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: .zero)
+        headerView.backgroundColor = #colorLiteral(red: 0.9491223693, green: 0.9485244155, blue: 0.9693283439, alpha: 1)
+        
+        let label = UILabel()
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        headerView.addSubview(label)
+        
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "seta_cima_preto"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tag = section
+        headerView.addSubview(button)
+        
+        button.addTarget(self, action: #selector(didTapOnArrow(sender:)), for: .touchUpInside)
+        
+        //
+//        let image = UIImageView()
+//        image.image = UIImage(named: "seta_cima_preto")!
+//        image.contentMode = .scaleAspectFit
+//        image.translatesAutoresizingMaskIntoConstraints = false
+//        headerView.addSubview(image)
+        
+        NSLayoutConstraint.activate([
+            label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10),
+            button.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            button.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20)
+        ])
         
         switch section {
         case 0:
-            return Position.executive.rawValue
+            label.text = Position.executive.rawValue
         case 1:
-            return Position.seniorManager.rawValue
+            label.text = Position.seniorManager.rawValue
         case 2:
-            return Position.staff.rawValue
+            label.text = Position.staff.rawValue
         default:
-            return "Header"
+            label.text = "Header"
         }
         
+        return headerView
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -96,7 +142,7 @@ class StaffViewController: UITableViewController {
         
         switch section {
         case 0:
-            return exec
+            return arrowTouched ? 0 : exec 
         case 1:
             return senior
         case 2:
@@ -112,7 +158,6 @@ class StaffViewController: UITableViewController {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
         
         var employee: Staff?
-        //let employee = selectedCompany?.staff?[indexPath.row]
         
         switch indexPath.section {
         case 0:
@@ -140,9 +185,6 @@ class StaffViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        //selectedCompany?.removeFromStaffArray(at: indexPath.row)
-        //CoreDataManager.shared.saveContext()
         
         var employee: Staff?
         
