@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC160D3324E19F190089A8BA /* StaffModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC160D3224E19F190089A8BA /* StaffModel.swift */; };
 		BC2BDA5824DCC7B500F10879 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BDA5624DCC7B500F10879 /* AlertService.swift */; };
 		BC2BDA5924DCC7B500F10879 /* AlertService.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2BDA5724DCC7B500F10879 /* AlertService.xib */; };
 		BC56270E24C1F12100FD709C /* CompaniesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC56270D24C1F12100FD709C /* CompaniesPresenter.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC160D3224E19F190089A8BA /* StaffModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffModel.swift; sourceTree = "<group>"; };
 		BC2BDA5624DCC7B500F10879 /* AlertService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		BC2BDA5724DCC7B500F10879 /* AlertService.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertService.xib; sourceTree = "<group>"; };
 		BC56270D24C1F12100FD709C /* CompaniesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesPresenter.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		BCD638BB24CF7AD800EE6FC0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				BC160D3224E19F190089A8BA /* StaffModel.swift */,
 				BCD638B524CF7AC500EE6FC0 /* Staff+CoreDataClass.swift */,
 				BCD638B624CF7AC500EE6FC0 /* Staff+CoreDataProperties.swift */,
 			);
@@ -370,6 +373,7 @@
 				BCD638AA24CF210F00EE6FC0 /* CoreDataManager.swift in Sources */,
 				BC56272324C28BF300FD709C /* EmployeeViewController.swift in Sources */,
 				BC56271D24C278F700FD709C /* MainDataModel.xcdatamodeld in Sources */,
+				BC160D3324E19F190089A8BA /* StaffModel.swift in Sources */,
 				BCD638B924CF7AC500EE6FC0 /* Staff+CoreDataClass.swift in Sources */,
 				BC943F2D24BFD5A400573147 /* SceneDelegate.swift in Sources */,
 				BC56271724C1F45D00FD709C /* CompaniesProtocols.swift in Sources */,

@@ -80,6 +80,8 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         presenter?.removeAllCompanyData()
         
+        //Do not delete from CoreData for now...
+        
     }
     
     @objc private func addCompany() {

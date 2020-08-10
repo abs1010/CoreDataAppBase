@@ -42,19 +42,19 @@ class StaffViewController: UITableViewController {
         
         if let section0 = selectedCompany?.staff?.filter({ $0.position == Position.executive.rawValue }) {
             
-            staffArray?.append(StaffModel(staff: section0, isExpanded: false))
+            staffArray?.append(StaffModel(staff: section0, isExpanded: true))
             
         }
         
         if let section1 = selectedCompany?.staff?.filter({ $0.position == Position.seniorManager.rawValue }) {
             
-            staffArray?.append(StaffModel(staff: section1, isExpanded: false))
+            staffArray?.append(StaffModel(staff: section1, isExpanded: true))
             
         }
         
         if let section2 = selectedCompany?.staff?.filter({ $0.position == Position.staff.rawValue }) {
             
-            staffArray?.append(StaffModel(staff: section2, isExpanded: false))
+            staffArray?.append(StaffModel(staff: section2, isExpanded: true))
             
         }
         
@@ -92,7 +92,9 @@ class StaffViewController: UITableViewController {
         
         let qtde = selectedCompany?.staff?.filter({$0.position == position.rawValue}).count ?? 0
         
-        let arrowTouched = staffArray?[section].isExpanded
+        guard let isExpanded = staffArray?[section].isExpanded else { return }
+        
+        staffArray?[section].isExpanded = !isExpanded
         
         var indexPaths = [IndexPath]()
         
@@ -103,35 +105,30 @@ class StaffViewController: UITableViewController {
             row += 1
         }
         
-        staffArray?[section].staff.removeAll()
-        tableView.deleteRows(at: indexPaths, with: .fade)
-        
-        staffArray?[section].isExpanded = !(arrowTouched ?? false)
-        
+        if isExpanded {
+            tableView.deleteRows(at: indexPaths, with: .fade)
+        }else {
+            tableView.insertRows(at: indexPaths, with: .fade)
+        }
+ 
     }
     
     @objc private func didTapOnArrow(sender: UIButton) {
         
         let section = sender.tag
-        let openClose = staffArray?[section].isExpanded
-        
-        staffArray?[section].isExpanded = !openClose!
         
         switch section {
         case 0:
             closeSection(position: .executive, section: section)
-            
         case 1:
             closeSection(position: .seniorManager, section: section)
-        
         case 2:
             closeSection(position: .staff, section: section)
-            
         default:
             return
         }
         
-        tableView.reloadSections(IndexSet(arrayLiteral: 0), with: .top)
+        tableView.reloadSections(IndexSet(arrayLiteral: section), with: .none)
         
     }
     
@@ -149,7 +146,7 @@ class StaffViewController: UITableViewController {
         let button = UIButton()
         if didSeparateSections {
             let option = self.staffArray?[section].isExpanded
-            let image = option ?? false ? #imageLiteral(resourceName: "seta_baixo_preto") : #imageLiteral(resourceName: "seta_cima_preto")
+            let image = option ?? false ? #imageLiteral(resourceName: "seta_cima_preto") : #imageLiteral(resourceName: "seta_baixo_preto")
             button.setImage(image, for: .normal)
         }
         
@@ -195,7 +192,11 @@ class StaffViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if didSeparateSections {
-            return staffArray?[section].staff.count ?? 0
+            if staffArray?[section].isExpanded ?? false {
+                return staffArray?[section].staff.count ?? 0
+            }else {
+                return 0
+            }
         }else {
             return 0
         }

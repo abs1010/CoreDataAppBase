@@ -12,5 +12,4 @@ class CompaniesIteractor : CompaniesPresenterToInteractorProtocol {
     
     var presenter: CompaniesInteractorToPresenterProtocol?
     
-    
 }
