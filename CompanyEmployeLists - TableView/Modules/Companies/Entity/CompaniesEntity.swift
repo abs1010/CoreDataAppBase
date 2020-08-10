@@ -26,3 +26,15 @@ enum Constants {
         case dataCouldNotBeSaved
     }
 }
+
+struct StaffModel {
+    
+    var staff: [Staff]
+    var isExpanded: Bool
+    
+    init(staff: [Staff], isExpanded: Bool) {
+        self.staff = staff
+        self.isExpanded = isExpanded
+    }
+     
+}

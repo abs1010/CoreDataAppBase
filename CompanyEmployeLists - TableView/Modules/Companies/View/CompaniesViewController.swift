@@ -112,7 +112,7 @@ class CompaniesViewController: UIViewController, UITableViewDelegate, UITableVie
             
             self.presenter?.addCompany(name: nameTextField, image: imageTextField, description: descriptionTextField
                 
-            )}
+        )}
         
         alerta.addAction(btnOk)
         

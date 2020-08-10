@@ -11,13 +11,15 @@ import UIKit
 class StaffViewController: UITableViewController {
     
     private var cellID = "cellID"
-    private var arrowTouched = false
+    private var didSeparateSections = false
+    private var staffArray: [StaffModel]? = []
     
     var selectedCompany: Company? {
         
         didSet {
             
             DispatchQueue.main.async {
+                self.separateArrayIntoSections()
                 self.tableView.reloadData()
             }
             
@@ -36,10 +38,34 @@ class StaffViewController: UITableViewController {
         
     }
     
+    private func separateArrayIntoSections() {
+        
+        if let section0 = selectedCompany?.staff?.filter({ $0.position == Position.executive.rawValue }) {
+            
+            staffArray?.append(StaffModel(staff: section0, isExpanded: false))
+            
+        }
+        
+        if let section1 = selectedCompany?.staff?.filter({ $0.position == Position.seniorManager.rawValue }) {
+            
+            staffArray?.append(StaffModel(staff: section1, isExpanded: false))
+            
+        }
+        
+        if let section2 = selectedCompany?.staff?.filter({ $0.position == Position.staff.rawValue }) {
+            
+            staffArray?.append(StaffModel(staff: section2, isExpanded: false))
+            
+        }
+        
+        didSeparateSections = true
+        
+    }
+    
     private func setUp() {
         
         view.backgroundColor = #colorLiteral(red: 0.9796836972, green: 0.2490850687, blue: 0.3219926953, alpha: 1)
-        
+        tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         
     }
@@ -62,21 +88,55 @@ class StaffViewController: UITableViewController {
         
     }
     
+    private func closeSection(position: Position, section: Int) {
+        
+        let qtde = selectedCompany?.staff?.filter({$0.position == position.rawValue}).count ?? 0
+        
+        let arrowTouched = staffArray?[section].isExpanded
+        
+        var indexPaths = [IndexPath]()
+        
+        var row = 0
+        
+        while row < qtde {
+            indexPaths.append(IndexPath(row: row, section: section))
+            row += 1
+        }
+        
+        staffArray?[section].staff.removeAll()
+        tableView.deleteRows(at: indexPaths, with: .fade)
+        
+        staffArray?[section].isExpanded = !(arrowTouched ?? false)
+        
+    }
+    
     @objc private func didTapOnArrow(sender: UIButton) {
         
-        arrowTouched = !arrowTouched
+        let section = sender.tag
+        let openClose = staffArray?[section].isExpanded
         
-        let image = arrowTouched ? #imageLiteral(resourceName: "seta_cima_preto") : #imageLiteral(resourceName: "seta_baixo_preto")
-
-        print("Clicou em \(sender.tag)")
+        staffArray?[section].isExpanded = !openClose!
         
-        let indexPaths: [IndexPath] = [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0)]
+        switch section {
+        case 0:
+            closeSection(position: .executive, section: section)
+            
+        case 1:
+            closeSection(position: .seniorManager, section: section)
         
-        tableView.deleteRows(at: indexPaths, with: .fade)
-    
+        case 2:
+            closeSection(position: .staff, section: section)
+            
+        default:
+            return
+        }
+        
+        tableView.reloadSections(IndexSet(arrayLiteral: 0), with: .top)
+        
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         let headerView = UIView(frame: .zero)
         headerView.backgroundColor = #colorLiteral(red: 0.9491223693, green: 0.9485244155, blue: 0.9693283439, alpha: 1)
         
@@ -87,19 +147,16 @@ class StaffViewController: UITableViewController {
         headerView.addSubview(label)
         
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "seta_cima_preto"), for: .normal)
+        if didSeparateSections {
+            let option = self.staffArray?[section].isExpanded
+            let image = option ?? false ? #imageLiteral(resourceName: "seta_baixo_preto") : #imageLiteral(resourceName: "seta_cima_preto")
+            button.setImage(image, for: .normal)
+        }
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = section
-        headerView.addSubview(button)
-        
         button.addTarget(self, action: #selector(didTapOnArrow(sender:)), for: .touchUpInside)
-        
-        //
-//        let image = UIImageView()
-//        image.image = UIImage(named: "seta_cima_preto")!
-//        image.contentMode = .scaleAspectFit
-//        image.translatesAutoresizingMaskIntoConstraints = false
-//        headerView.addSubview(image)
+        headerView.addSubview(button)
         
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
@@ -120,6 +177,7 @@ class StaffViewController: UITableViewController {
         }
         
         return headerView
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -136,18 +194,9 @@ class StaffViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let exec = selectedCompany?.staff?.filter({$0.position == Position.executive.rawValue}).count else { return 0 }
-        guard let senior = selectedCompany?.staff?.filter({$0.position == Position.seniorManager.rawValue}).count else { return 0 }
-        guard let staff = selectedCompany?.staff?.filter({$0.position == Position.staff.rawValue}).count else { return 0 }
-        
-        switch section {
-        case 0:
-            return arrowTouched ? 0 : exec 
-        case 1:
-            return senior
-        case 2:
-            return staff
-        default:
+        if didSeparateSections {
+            return staffArray?[section].staff.count ?? 0
+        }else {
             return 0
         }
         
